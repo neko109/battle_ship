@@ -18,7 +18,6 @@ draw_grid(ax2)
 
 used_cells = set()
 
-
 def is_valid_position(x, y, length, orientation):
     for i in range(length):
         if orientation == 'horizontal':
@@ -72,6 +71,6 @@ place_ship(ax1, 2)
 place_ship(ax1, 1)
 place_ship(ax1, 1)
 place_ship(ax1, 1)
-place_ship(ax1, 1)
+place_ship(ax1, 1)
 
 plt.show()
