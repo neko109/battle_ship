@@ -36,6 +36,13 @@ def is_valid_position(x, y, length, orientation):
                         return False
     return True
 
+ships = {
+    "1": [],
+    "2": [],
+    "3": [],
+    "4": [],
+}
+
 def place_ship(ax, length):
     placed = False
     attempts = 0
@@ -52,9 +59,25 @@ def place_ship(ax, length):
             for i in range(length):
                 if orientation == 'horizontal':
                     used_cells.add((x + i, y))
+                    if length == 1:
+                        ships["1"].append((x + i, y))
+                    elif length == 2:
+                        ships["2"].extend((x + i, y))
+                    elif length == 3:
+                        ships["3"].extend((x + i, y))
+                    else:
+                        ships["4"].extend((x + i, y))
                     ax.add_patch(plt.Rectangle((x + i, y), 1, 1, color='black'))
                 else:
                     used_cells.add((x, y + i))
+                    if length == 1:
+                        ships["1"].append((x, y + i))
+                    elif length == 2:
+                        ships["2"].extend((x, y + i))
+                    elif length == 3:
+                        ships["3"].extend((x, y + i))
+                    else:
+                        ships["4"].extend((x, y + i))
                     ax.add_patch(plt.Rectangle((x, y + i), 1, 1, color='black'))
             placed = True
         attempts += 1
@@ -72,5 +95,7 @@ place_ship(ax1, 1)
 place_ship(ax1, 1)
 place_ship(ax1, 1)
 place_ship(ax1, 1)
+
+print(ships)
 
 plt.show()
