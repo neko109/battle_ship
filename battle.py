@@ -62,22 +62,22 @@ def place_ship(ax, length):
                     if length == 1:
                         ships["1"].append((x + i, y))
                     elif length == 2:
-                        ships["2"].extend((x + i, y))
+                        ships["2"].append((x + i, y))
                     elif length == 3:
-                        ships["3"].extend((x + i, y))
+                        ships["3"].append((x + i, y))
                     else:
-                        ships["4"].extend((x + i, y))
+                        ships["4"].append((x + i, y))
                     ax.add_patch(plt.Rectangle((x + i, y), 1, 1, color='black'))
                 else:
                     used_cells.add((x, y + i))
                     if length == 1:
                         ships["1"].append((x, y + i))
                     elif length == 2:
-                        ships["2"].extend((x, y + i))
+                        ships["2"].append((x, y + i))
                     elif length == 3:
-                        ships["3"].extend((x, y + i))
+                        ships["3"].append((x, y + i))
                     else:
-                        ships["4"].extend((x, y + i))
+                        ships["4"].append((x, y + i))
                     ax.add_patch(plt.Rectangle((x, y + i), 1, 1, color='black'))
             placed = True
         attempts += 1
@@ -95,6 +95,38 @@ place_ship(ax1, 1)
 place_ship(ax1, 1)
 place_ship(ax1, 1)
 place_ship(ax1, 1)
+
+hit_cells = set()
+
+def check_hit(x, y):
+    for length, positions in ships.items():
+        if (x, y) in positions:
+            hit_cells.add((x, y))
+            positions.remove((x, y))
+            if not positions:
+                print(f"Ship with length {length} destroyed!")
+            else:
+                print("Shot!")
+            return True
+    print("Miss!")
+    return False
+
+def game(ax, ships):
+    while ships:
+        x = int(input("Input X value (0-9): "))
+        y = int(input("Input Y value (0-9): ")) 
+        if (x, y) in hit_cells:
+            print("You already hit this cell")
+        elif check_hit(x, y):
+            ax.add_patch(plt.Rectangle((x, y), 1, 1, color='red'))
+        else:
+            ax.add_patch(plt.Rectangle((x, y), 1, 1, color='blue'))
+        plt.draw()
+        plt.pause(0.5)
+
+    print("Game over! All ships are destroyed")
+
+game(ax1, ships)
 
 print(ships)
 
